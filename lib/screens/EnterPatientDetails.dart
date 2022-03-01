@@ -1,10 +1,10 @@
 import 'package:ecg/ECGGraph.dart';
 import 'package:ecg/screens/signIn.dart';
+import 'package:ecg/services/RTDB.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecg/services/authentication.dart';
-
 
 class homePage extends StatefulWidget {
   const homePage({Key? key}) : super(key: key);
@@ -20,7 +20,6 @@ class _homePageState extends State<homePage> {
 
   @override
   Widget build(BuildContext context) {
-
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -35,7 +34,7 @@ class _homePageState extends State<homePage> {
                   style: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
-                    color: Colors.teal,
+                    color: Colors.red,
                   )),
               SizedBox(height: 50),
               Container(
@@ -94,17 +93,28 @@ class _homePageState extends State<homePage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                child:
-                Text('ECG Representation', style: TextStyle(fontSize: 30)),
-                onPressed: () {
+                child: Text('ECG Report', style: TextStyle(fontSize: 30)),
+                onPressed: () async {
+
+
+                   await RTDB.insertData(patientIDController.text.toString().trim(),
+                      nameController.text.toString().trim(),
+                      ageController.text.toString().trim());
+
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => ECGGraph(
-                            patientName: nameController.text.toString().trim(),
-                            age: ageController.text.toString().trim(),
-                            patientId: patientIDController.text.toString().trim(),
-                          )));
+                                patientName:
+                                    nameController.text.toString().trim(),
+                                age: ageController.text.toString().trim(),
+                                patientId:
+                                    patientIDController.text.toString().trim(),
+                              )));
+
+
+
                 },
               ),
               SizedBox(height: 10),
