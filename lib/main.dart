@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:ecg/screens/homePage.dart';
+import 'package:ecg/screens/EnterPatientDetails.dart';
+import 'package:ecg/screens/HomePage.dart';
 import 'package:ecg/screens/signIn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +17,7 @@ void main() async {
           storageBucket: "ecgdevice-2dc8d.appspot.com",
           messagingSenderId: "68402212968",
           appId: "1:68402212968:web:a57ad185917b1f50428bdd",
-          measurementId: "G-VVQ95HWC9W"
-      ));
+          measurementId: "G-VVQ95HWC9W"));
   runApp(MyApp());
 }
 
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.teal),
+      theme: ThemeData(primarySwatch: Colors.red),
       title: 'ECG',
       home: StreamBuilder(
         stream: FirebaseAuth.instance.authStateChanges(),
@@ -46,7 +45,7 @@ class MyApp extends StatelessWidget {
               child: Text("Something went wrong!"),
             );
           } else if (snapshot.hasData) {
-            return homePage();
+            return HomePage();
           } else {
             return Login();
           }

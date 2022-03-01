@@ -1,4 +1,4 @@
-import 'package:ecg/screens/homePage.dart';
+import 'package:ecg/screens/EnterPatientDetails.dart';
 import 'package:ecg/screens/signIn.dart';
 import 'package:flutter/material.dart';
 import 'package:ecg/services/authentication.dart';
@@ -62,7 +62,7 @@ class signUp extends StatelessWidget {
                       .signUpAuth(context, emailController.text.trim(),
                       passwordController.text.trim())
                       .then((value) => Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => homePage())));
+                      MaterialPageRoute(builder: (context) => EnterPatientDetails())));
                 },
               ),
             ),

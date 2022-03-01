@@ -1,8 +1,9 @@
+import 'package:ecg/screens/HomePage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecg/services/authentication.dart';
 import '../main.dart';
-import 'homePage.dart';
+import 'EnterPatientDetails.dart';
 
 
 class Login extends StatelessWidget {
@@ -24,7 +25,7 @@ class Login extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
-                    color: Colors.teal,
+                    color: Colors.red,
                   )),
               SizedBox(height: 50),
               Container(
@@ -86,7 +87,7 @@ class Login extends StatelessWidget {
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => homePage()));
+                                  builder: (context) => HomePage()));
                         }
 
 
@@ -107,6 +108,8 @@ class Login extends StatelessWidget {
               //     )
               //   ],
               // )
+
+
             ],
           ),
         ),

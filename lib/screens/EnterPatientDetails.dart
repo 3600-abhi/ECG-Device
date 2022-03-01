@@ -1,19 +1,19 @@
 import 'package:ecg/ECGGraph.dart';
+import 'package:ecg/screens/ShowReport.dart';
 import 'package:ecg/screens/signIn.dart';
 import 'package:ecg/services/RTDB.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecg/services/authentication.dart';
 
-class homePage extends StatefulWidget {
-  const homePage({Key? key}) : super(key: key);
+class EnterPatientDetails extends StatefulWidget {
+  const EnterPatientDetails({Key? key}) : super(key: key);
 
   @override
-  _homePageState createState() => _homePageState();
+  _EnterPatientDetailsState createState() => _EnterPatientDetailsState();
 }
 
-class _homePageState extends State<homePage> {
+class _EnterPatientDetailsState extends State<EnterPatientDetails> {
   TextEditingController nameController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController patientIDController = TextEditingController();
@@ -93,19 +93,13 @@ class _homePageState extends State<homePage> {
               ),
               SizedBox(height: 20),
               ElevatedButton(
-                child: Text('ECG Report', style: TextStyle(fontSize: 30)),
+                child: Text('Show Report'),
                 onPressed: () async {
-
-
-                   await RTDB.insertData(patientIDController.text.toString().trim(),
-                      nameController.text.toString().trim(),
-                      ageController.text.toString().trim());
-
 
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ECGGraph(
+                          builder: (context) => ShowReport(
                                 patientName:
                                     nameController.text.toString().trim(),
                                 age: ageController.text.toString().trim(),
@@ -119,7 +113,7 @@ class _homePageState extends State<homePage> {
               ),
               SizedBox(height: 10),
               ElevatedButton(
-                child: Text('Sign out', style: TextStyle(fontSize: 30)),
+                child: Text('Sign out'),
                 onPressed: () {
                   signInAuthUsingEmailAndPassword.signOutAuth().then((value) =>
                       Navigator.pushReplacement(context,
