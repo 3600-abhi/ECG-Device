@@ -49,6 +49,10 @@ dependencies:
   # to take screenshot
   screenshot: ^1.2.3
 
+  # for sharing
+  share_plus: ^4.0.4
+  path_provider: any
+
   # for conversion of integer to Roman
   numerus: ^1.1.1
 

@@ -5,6 +5,7 @@ import 'package:chart_sparkline/chart_sparkline.dart';
 import 'package:ecg/services/RTDB.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:screenshot/screenshot.dart';
@@ -14,27 +15,40 @@ import 'dart:js' as js;
 import 'package:numerus/numerus.dart';
 
 class ShowPreviousReport extends StatefulWidget {
-
+  String patientName = '';
+  String age = '';
   String patientId = '';
   String date = '';
   String time = '';
 
   ShowPreviousReport(
       {Key? key,
-        required this.patientId,
-        required this.date,
-        required this.time})
+      required this.patientName,
+      required this.age,
+      required this.patientId,
+      required this.date,
+      required this.time})
       : super(key: key);
 
   @override
-  State<ShowPreviousReport> createState() =>
-      _ShowPreviousReportState(patientId: patientId, date: date, time: time);
+  State<ShowPreviousReport> createState() => _ShowPreviousReportState(
+      patientName: patientName,
+      age: age,
+      patientId: patientId,
+      date: date,
+      time: time);
 }
 
 class _ShowPreviousReportState extends State<ShowPreviousReport> {
   _ShowPreviousReportState(
-      {required this.patientId, required this.date, required this.time});
+      {required this.patientName,
+      required this.age,
+      required this.patientId,
+      required this.date,
+      required this.time});
 
+  String patientName = '';
+  String age = '';
   String patientId = '';
   String date = '';
   String time = '';
@@ -55,16 +69,15 @@ class _ShowPreviousReportState extends State<ShowPreviousReport> {
 
   Widget partitionLine(int labelIndex) {
     return Container(
-      height: 140,
       child: Column(
         children: [
           Text('${label[labelIndex]}',
               style: TextStyle(
                   color: Colors.black,
-                  fontSize: 12,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold)),
           Container(
-            height: 70,
+            height: 90,
             child: VerticalDivider(
               color: Colors.black,
               thickness: 3,
@@ -80,10 +93,19 @@ class _ShowPreviousReportState extends State<ShowPreviousReport> {
       height: 150,
       child: Row(
         children: [
-          Container(height : 80,child: Sparkline(data: data, lineColor: Colors.black, lineWidth: 2)),
+          Container(
+              child:
+                  Sparkline(data: data, lineColor: Colors.black, lineWidth: 2)),
           labelIndex < label.length && idx != 3 && idx != 7 && idx != 11
               ? partitionLine(labelIndex)
               : Text(''),
+
+          // child: Stack(
+          //   children: [
+          //     Container(width:270,child: Sparkline(data: data, lineColor: Colors.black, lineWidth: 2)),
+          //     labelIndex < label.length && idx != 3 && idx != 7 && idx != 11
+          //         ? partitionLine(labelIndex)
+          //         : Text(''),
         ],
       ),
     );
@@ -107,11 +129,11 @@ class _ShowPreviousReportState extends State<ShowPreviousReport> {
                     color: Colors.red,
                   ),
                   SizedBox(height: 15),
-                  Text('Report is loading Please wait...',style: TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.red
-                  ))
+                  Text('Report is loading Please wait...',
+                      style: TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.red))
                 ],
               ),
             );
@@ -124,9 +146,42 @@ class _ShowPreviousReportState extends State<ShowPreviousReport> {
                     color: Colors.white,
                     child: Column(
                       children: [
+                        SizedBox(height: 15),
+                        Container(
+                          // padding: EdgeInsets.only(left: 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text('Patient Name : ${widget.patientName}',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(width: 10),
+                              Text('Patient Age : ${widget.age}',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(width: 10),
+                              Text('Patient ID : ${widget.patientId}',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(width: 10),
+                              Text('Date : ${date}',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                              SizedBox(width: 10),
+                              Text('Time : ${time}',
+                                  style: TextStyle(
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ),
                         SizedBox(height: 25),
                         Container(
-                          height: 900,
+                          height: 850,
                           padding: EdgeInsets.only(left: 30, right: 30),
                           child: GridPaper(
                             interval: 40,
@@ -135,31 +190,30 @@ class _ShowPreviousReportState extends State<ShowPreviousReport> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: snapshot.data!.map((data1) {
                                 return Container(
-                                    padding: EdgeInsets.only(
-                                        left: 0.01, right: 0.01),
                                     child: Row(
-                                      children: [
-                                        Text(
-                                            '${(graphNum++).toRomanNumeralString()}    ',
-                                            style: TextStyle(
-                                                fontSize: 50,
-                                                fontWeight: FontWeight.bold)),
-                                        Expanded(
-                                            child: Container(
-                                              height :200,
-                                              child: Row(
-                                                  children: data1.map((data2) {
-                                                    return idx == 3 ||
-                                                        idx == 7 ||
-                                                        idx == 11
-                                                        ? partition(
-                                                        data2, labelIndex, idx++)
-                                                        : partition(
-                                                        data2, labelIndex++, idx++);
-                                                  }).toList()),
-                                            ))
-                                      ],
-                                    ));
+                                  children: [
+                                    SizedBox(width: 10),
+                                    Container(
+                                      width: 50,
+                                      child: Text(
+                                          '${(graphNum++).toRomanNumeralString()}    ',
+                                          style: TextStyle(
+                                              fontSize: 40,
+                                              fontWeight: FontWeight.w500)),
+                                    ),
+                                    Expanded(
+                                        child: Container(
+                                      child: Row(
+                                          children: data1.map((data2) {
+                                        return idx == 3 || idx == 7 || idx == 11
+                                            ? partition(
+                                                data2, labelIndex, idx++)
+                                            : partition(
+                                                data2, labelIndex++, idx++);
+                                      }).toList()),
+                                    ))
+                                  ],
+                                ));
                               }).toList(),
                             ),
                           ),
@@ -183,7 +237,7 @@ class _ShowPreviousReportState extends State<ShowPreviousReport> {
                         final _base64 = base64Encode(screenshot!);
                         final anchor = AnchorElement(
                             href:
-                            'data:application/octet-stream;base64,$_base64')
+                                'data:application/octet-stream;base64,$_base64')
                           ..download = "ECG_Report.png"
                           ..target = 'blank';
 
@@ -231,7 +285,6 @@ class _ShowPreviousReportState extends State<ShowPreviousReport> {
                   ),
                 ),
                 SizedBox(height: 20),
-
               ],
             );
           }

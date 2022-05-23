@@ -1,3 +1,4 @@
+import 'package:ecg/AdminPanel/AdminLogin.dart';
 import 'package:ecg/screens/EnterPatientDetails.dart';
 import 'package:ecg/screens/signIn.dart';
 import 'package:flutter/material.dart';
@@ -22,12 +23,16 @@ class signUp extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 50,
                   fontWeight: FontWeight.bold,
-                  color: Colors.teal,
+                  color: Colors.red
                 )),
             SizedBox(height: 50),
             Container(
-              padding: EdgeInsets.only(left: 280, right: 280),
+              constraints: BoxConstraints(
+                maxWidth: 400,
+                minWidth: 150,
+              ),
               child: TextField(
+                textInputAction: TextInputAction.next,
                 controller: emailController,
                 decoration: InputDecoration(
                     hintText: 'Enter your Email',
@@ -39,8 +44,12 @@ class signUp extends StatelessWidget {
             ),
             SizedBox(height: 25),
             Container(
-              padding: EdgeInsets.only(left: 280, right: 280),
+              constraints: BoxConstraints(
+                maxWidth: 400,
+                minWidth: 150,
+              ),
               child: TextField(
+                textInputAction: TextInputAction.next,
                 controller: passwordController,
                 obscureText: true,
                 obscuringCharacter: '*',
@@ -70,12 +79,12 @@ class signUp extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Already have an account ?"),
+                Text("Already have an account ?", style: TextStyle(fontSize: 25)),
                 TextButton(
-                  child: Text('SignIn'),
+                  child: Text('SignIn', style: TextStyle(fontSize: 25)),
                   onPressed: () {
                     Navigator.pushReplacement(context,
-                        MaterialPageRoute(builder: (context) => Login()));
+                        MaterialPageRoute(builder: (context) => AdminLogin()));
                   },
                 )
               ],

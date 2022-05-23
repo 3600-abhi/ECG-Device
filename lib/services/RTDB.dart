@@ -8,7 +8,6 @@ import 'package:intl/intl.dart';
 
 class RTDB {
 
-
   static Future<List<List<List<double>>>> fetchData() async {
     print('Hello');
     Query query = await FirebaseDatabase.instance.ref();
@@ -242,6 +241,9 @@ class RTDB {
     return data;
   }
 
+  static Future deleteData(String patientId,String date,String time) async {
+    await FirebaseDatabase.instance.ref(patientId).child(date).child(time).remove();
+  }
 }
 
 

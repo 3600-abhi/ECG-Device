@@ -1,13 +1,12 @@
 import 'package:ecg/screens/HomePage.dart';
+import 'package:ecg/screens/signUp.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecg/services/authentication.dart';
 import '../main.dart';
-import 'EnterPatientDetails.dart';
-import 'package:ecg/AdminPanel/AdminLogin.dart';
 
-class Login extends StatelessWidget {
-  Login({Key? key}) : super(key: key);
+class AdminLogin extends StatelessWidget {
+  AdminLogin({Key? key}) : super(key: key);
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -15,28 +14,13 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Login',
-        ),
-        actions: [
-          ElevatedButton(
-              child: Text('Login as Admin'),
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.yellow)),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AdminLogin()));
-              }),
-          SizedBox(width: 15)
-        ],
-      ),
+      appBar: AppBar(title: Text('Login as Admin')),
       body: Center(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('Login',
+              Text('Login as Admin',
                   style: TextStyle(
                     fontSize: 50,
                     fontWeight: FontWeight.bold,
@@ -48,7 +32,6 @@ class Login extends StatelessWidget {
                   maxWidth: 400,
                   minWidth: 150,
                 ),
-                //padding: EdgeInsets.only(left: 280, right: 280),
                 child: TextField(
                   textInputAction: TextInputAction.next,
                   controller: emailController,
@@ -66,7 +49,6 @@ class Login extends StatelessWidget {
                   maxWidth: 400,
                   minWidth: 150,
                 ),
-                //padding: EdgeInsets.only(left: 280, right: 280),
                 child: TextField(
                   textInputAction: TextInputAction.next,
                   controller: passwordController,
@@ -88,7 +70,7 @@ class Login extends StatelessWidget {
                     onPressed: () {
                       signInAuthUsingEmailAndPassword
                           .signInAuth(context, emailController.text.trim(),
-                              passwordController.text.trim())
+                          passwordController.text.trim())
                           .then((value) {
                         if (value != null) {
                           const snackBar = SnackBar(
@@ -106,7 +88,22 @@ class Login extends StatelessWidget {
                       });
                     }),
               ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account ?", style: TextStyle(fontSize: 25)),
+                  TextButton(
+                    child: Text('SignUp', style: TextStyle(fontSize: 25)),
+                    onPressed: () {
+                      Navigator.pushReplacement(context,
+                          MaterialPageRoute(builder: (context) => signUp()));
+                    },
+                  )
+                ],
+              )
             ],
+
           ),
         ),
       ),
