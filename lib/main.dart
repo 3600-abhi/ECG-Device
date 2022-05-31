@@ -1,8 +1,12 @@
 import 'dart:convert';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecg/AdminPanel/AdminPage.dart';
+import 'package:ecg/CheckAccountType.dart';
 import 'package:ecg/screens/EnterPatientDetails.dart';
 import 'package:ecg/screens/HomePage.dart';
 import 'package:ecg/screens/signIn.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -18,6 +22,7 @@ void main() async {
           messagingSenderId: "68402212968",
           appId: "1:68402212968:web:a57ad185917b1f50428bdd",
           measurementId: "G-VVQ95HWC9W"));
+  
   runApp(MyApp());
 }
 
@@ -45,7 +50,7 @@ class MyApp extends StatelessWidget {
               child: Text("Something went wrong!"),
             );
           } else if (snapshot.hasData) {
-            return HomePage();
+            return CheckAccountType();
           } else {
             return Login();
           }

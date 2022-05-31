@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecg/CheckAccountType.dart';
 import 'package:ecg/screens/HomePage.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ecg/services/authentication.dart';
+import '../AdminPanel/AdminPage.dart';
 import '../main.dart';
 import 'EnterPatientDetails.dart';
-import 'package:ecg/AdminPanel/AdminLogin.dart';
 
 class Login extends StatelessWidget {
   Login({Key? key}) : super(key: key);
@@ -19,17 +22,6 @@ class Login extends StatelessWidget {
         title: Text(
           'Login',
         ),
-        actions: [
-          ElevatedButton(
-              child: Text('Login as Admin'),
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.yellow)),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => AdminLogin()));
-              }),
-          SizedBox(width: 15)
-        ],
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -84,12 +76,12 @@ class Login extends StatelessWidget {
               Container(
                 height: 50,
                 child: ElevatedButton(
-                    child: Text('Sign In', style: TextStyle(fontSize: 30)),
-                    onPressed: () {
+                    child: Text('Login', style: TextStyle(fontSize: 30)),
+                    onPressed: () async {
                       signInAuthUsingEmailAndPassword
                           .signInAuth(context, emailController.text.trim(),
                               passwordController.text.trim())
-                          .then((value) {
+                          .then((value) async {
                         if (value != null) {
                           const snackBar = SnackBar(
                             content: Text('Invalid Email or Password'),
@@ -98,10 +90,11 @@ class Login extends StatelessWidget {
                               .popUntil((route) => route.isFirst);
                           ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         } else {
+
                           Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomePage()));
+                                  builder: (context) => CheckAccountType()));
                         }
                       });
                     }),

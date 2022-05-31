@@ -56,6 +56,9 @@ dependencies:
   # for conversion of integer to Roman
   numerus: ^1.1.1
 
+  # for firestore database
+  cloud_firestore: ^3.1.17
+
   # for table with sticky headers
   data_table_2: ^2.2.0
 
